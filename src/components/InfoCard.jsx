@@ -1,14 +1,18 @@
 import { CgDetailsMore } from "react-icons/cg";
 import PokemonStats from "./PokemonStats";
 import PokemonTypes from "./PokemonTypes";
+import { useContext } from "react";
+import BackgroundContext from "../BackgroundContext";
 
 function InfoCard(props) {
+  const background = useContext(BackgroundContext);
+
   const buttonStyles = {
-    backgroundColor: props.assignColor(props.types[0].type.name),
+    backgroundColor: background(props.types[0].type.name),
   };
 
   const cardBackground = {
-    backgroundImage: `linear-gradient(to bottom, ${props.assignColor(
+    backgroundImage: `linear-gradient(to bottom, ${background(
       props.types[0].type.name
     )} , #060B28 )`,
   };
@@ -28,19 +32,19 @@ function InfoCard(props) {
           />
 
           <p className="font-bold text-xl mb-1">
-            {props.idNumber >= 10
-              ? `#0${props.idNumber}`
-              : `#00${props.idNumber}`}
+            {props.id >= 10 ? `#0${props.id}` : `#00${props.id}`}
           </p>
-          <p className="font-bold text-3xl mb-3">{props.name}</p>
+          <p className="font-bold text-3xl mb-3">
+            {props.name[0].toUpperCase().concat(props.name.slice(1))}
+          </p>
 
-          <PokemonTypes types={props.types} assignColor={props.assignColor} />
+          <PokemonTypes types={props.types} />
           <PokemonStats weight={props.weight} height={props.height} />
         </div>
         <button
           className=" w-full  left-0 top-full border-card-grass rounded-b-3xl py-3 font-primary font-bold text-text flex items-center justify-center gap-1 cursor-pointer"
           style={buttonStyles}
-          onClick={(event) => props.openModal(event, props.idNumber)}
+          onClick={(event) => props.openModal(event, props.id)}
         >
           <CgDetailsMore size={30} />
           More Details

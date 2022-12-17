@@ -1,9 +1,13 @@
 import { nanoid } from "nanoid";
+import BackgroundContext from "../BackgroundContext";
+import { useContext } from "react";
 
 function PokemonTypes(props) {
+  const background = useContext(BackgroundContext);
+
   const typesElement = props.types.map((type) => {
     const styles = {
-      backgroundColor: props.assignColor(type.type.name),
+      backgroundColor: background(type.type.name),
     };
 
     return (
